@@ -19,7 +19,11 @@ class ShutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
 
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
-        return 0.4
+        if self.presenting {
+            return 0.4
+        } else {
+            return 0.4
+        }
     }
 
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
@@ -40,12 +44,13 @@ class ShutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let snapshot = toView.snapshotViewAfterScreenUpdates(true)
 
         var w: CGFloat = CGRectGetWidth(snapshot.frame)
-        var h: CGFloat = CGRectGetHeight(snapshot.frame) / 2
+//        var h: CGFloat = CGRectGetHeight(snapshot.frame) / 2
+        var h: CGFloat = CGRectGetHeight(snapshot.frame)
 
-        let topView = snapshot.resizableSnapshotViewFromRect(CGRect(x: 0, y: 0, width: w, height: h), afterScreenUpdates: false, withCapInsets: UIEdgeInsetsZero)
-        let bottomView = snapshot.resizableSnapshotViewFromRect(CGRect(x: 0, y: h, width: w, height: h), afterScreenUpdates: false, withCapInsets: UIEdgeInsetsZero)
-//        let topView = snapshot.resizableSnapshotViewFromRect(CGRect(x: 0, y: 0, width: w, height: self.divideY), afterScreenUpdates: false, withCapInsets: UIEdgeInsetsZero)
-//        let bottomView = snapshot.resizableSnapshotViewFromRect(CGRect(x: 0, y: self.divideY, width: w, height: h - self.divideY), afterScreenUpdates: false, withCapInsets: UIEdgeInsetsZero)
+//        let topView = snapshot.resizableSnapshotViewFromRect(CGRect(x: 0, y: 0, width: w, height: h), afterScreenUpdates: false, withCapInsets: UIEdgeInsetsZero)
+//        let bottomView = snapshot.resizableSnapshotViewFromRect(CGRect(x: 0, y: h, width: w, height: h), afterScreenUpdates: false, withCapInsets: UIEdgeInsetsZero)
+        let topView = snapshot.resizableSnapshotViewFromRect(CGRect(x: 0, y: 0, width: w, height: self.divideY), afterScreenUpdates: false, withCapInsets: UIEdgeInsetsZero)
+        let bottomView = snapshot.resizableSnapshotViewFromRect(CGRect(x: 0, y: self.divideY, width: w, height: h - self.divideY), afterScreenUpdates: false, withCapInsets: UIEdgeInsetsZero)
 
         var topFrame = topView.frame
         var topOutFrame = CGRectOffset(topFrame, 0, -CGRectGetHeight(topFrame))
@@ -57,8 +62,19 @@ class ShutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         containerView.addSubview(topView)
         containerView.addSubview(bottomView)
-
-//        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, options: .CurveEaseOut, animations: { () -> Void in
+        /*
+        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, options: .CurveEaseOut, animations: { () -> Void in
+            topView.frame = topFrame
+            bottomView.frame = bottomFrame
+        }) { (finished: Bool) -> Void in
+            containerView.insertSubview(toView, belowSubview: topView)
+            topView.removeFromSuperview()
+            bottomView.removeFromSuperview()
+            let completed = !transitionContext.transitionWasCancelled()
+            transitionContext.completeTransition(completed)
+        }
+        */
+//        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .CurveEaseOut, animations: { () -> Void in
 //            topView.frame = topFrame
 //            bottomView.frame = bottomFrame
 //        }) { (finished: Bool) -> Void in
@@ -68,15 +84,20 @@ class ShutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 //            let completed = !transitionContext.transitionWasCancelled()
 //            transitionContext.completeTransition(completed)
 //        }
-        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .CurveEaseOut, animations: { () -> Void in
+
+        let duration = self.transitionDuration(transitionContext)
+        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseOut, animations: { () -> Void in
             topView.frame = topFrame
-            bottomView.frame = bottomFrame
         }) { (finished: Bool) -> Void in
-            containerView.insertSubview(toView, belowSubview: topView)
-            topView.removeFromSuperview()
-            bottomView.removeFromSuperview()
-            let completed = !transitionContext.transitionWasCancelled()
-            transitionContext.completeTransition(completed)
+            UIView.animateWithDuration(duration, delay: 0, options: .CurveEaseOut, animations: { () -> Void in
+                bottomView.frame = bottomFrame
+                }) { (finished: Bool) -> Void in
+                    containerView.insertSubview(toView, belowSubview: topView)
+                    topView.removeFromSuperview()
+                    bottomView.removeFromSuperview()
+                    let completed = !transitionContext.transitionWasCancelled()
+                    transitionContext.completeTransition(completed)
+            }
         }
     }
 
@@ -106,14 +127,15 @@ class ShutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(topView)
         containerView.addSubview(bottomView)
         fromView.removeFromSuperview()
-
-//        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, options: .CurveEaseOut, animations: { () -> Void in
-//            topView.frame = topOutFrame
-//            bottomView.frame = bottomOutFrame
-//        }) { (finished: Bool) -> Void in
-//            let completed = !transitionContext.transitionWasCancelled()
-//            transitionContext.completeTransition(completed)
-//        }
+        /*
+        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, options: .CurveEaseOut, animations: { () -> Void in
+            topView.frame = topOutFrame
+            bottomView.frame = bottomOutFrame
+        }) { (finished: Bool) -> Void in
+            let completed = !transitionContext.transitionWasCancelled()
+            transitionContext.completeTransition(completed)
+        }
+        */
         UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: .CurveEaseOut, animations: { () -> Void in
             topView.frame = topOutFrame
             bottomView.frame = bottomOutFrame

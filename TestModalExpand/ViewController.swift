@@ -51,6 +51,7 @@ class ViewController: UIViewController, UIViewControllerTransitioningDelegate, L
 
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = ShutAnimator(presenting: true)
+        animator.divideY = 64
         return animator
     }
 

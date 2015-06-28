@@ -58,17 +58,18 @@ class SpreadAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(bottomView)
         containerView.insertSubview(toView, belowSubview: topView)
         toView.alpha = 0.5
-
-//        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, options: .CurveEaseOut, animations: { () -> Void in
-//            topView.frame = topFrame
-//            bottomView.frame = bottomFrame
-//        }) { (finished: Bool) -> Void in
-//            containerView.insertSubview(toView, belowSubview: topView)
-//            topView.removeFromSuperview()
-//            bottomView.removeFromSuperview()
-//            let completed = !transitionContext.transitionWasCancelled()
-//            transitionContext.completeTransition(completed)
-//        }
+        /*
+        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, options: .CurveEaseOut, animations: { () -> Void in
+            topView.frame = topOutFrame
+            bottomView.frame = bottomOutFrame
+            toView.alpha = 1.0
+        }) { (finished: Bool) -> Void in
+            topView.removeFromSuperview()
+            bottomView.removeFromSuperview()
+            let completed = !transitionContext.transitionWasCancelled()
+            transitionContext.completeTransition(completed)
+        }
+        */
         UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .CurveEaseOut, animations: { () -> Void in
             topView.frame = topOutFrame
             bottomView.frame = bottomOutFrame
@@ -107,14 +108,15 @@ class SpreadAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         containerView.addSubview(topView)
         containerView.addSubview(bottomView)
-
-//        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, options: .CurveEaseOut, animations: { () -> Void in
-//            topView.frame = topOutFrame
-//            bottomView.frame = bottomOutFrame
-//        }) { (finished: Bool) -> Void in
-//            let completed = !transitionContext.transitionWasCancelled()
-//            transitionContext.completeTransition(completed)
-//        }
+        /*
+        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, options: .CurveEaseOut, animations: { () -> Void in
+            topView.frame = topFrame
+            bottomView.frame = bottomFrame
+        }) { (finished: Bool) -> Void in
+            let completed = !transitionContext.transitionWasCancelled()
+            transitionContext.completeTransition(completed)
+        }
+        */
         UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: .CurveEaseOut, animations: { () -> Void in
             topView.frame = topFrame
             bottomView.frame = bottomFrame
