@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E2A8F081B4041AC00DF39BF /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2A8F071B4041AC00DF39BF /* DetailViewController.swift */; };
+		0E2A8F0A1B4041B400DF39BF /* SpreadAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2A8F091B4041B400DF39BF /* SpreadAnimator.swift */; };
 		0EA777F71B3FD5C4004EED62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA777F61B3FD5C4004EED62 /* AppDelegate.swift */; };
 		0EA777F91B3FD5C4004EED62 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA777F81B3FD5C4004EED62 /* ViewController.swift */; };
 		0EA777FC1B3FD5C4004EED62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EA777FA1B3FD5C4004EED62 /* Main.storyboard */; };
@@ -28,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E2A8F071B4041AC00DF39BF /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		0E2A8F091B4041B400DF39BF /* SpreadAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpreadAnimator.swift; sourceTree = "<group>"; };
 		0EA777F11B3FD5C4004EED62 /* TestModalExpand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestModalExpand.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EA777F51B3FD5C4004EED62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0EA777F61B3FD5C4004EED62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +93,8 @@
 				0EA777F41B3FD5C4004EED62 /* Supporting Files */,
 				0EA778161B3FD750004EED62 /* ListViewController.swift */,
 				0EA778181B3FD98E004EED62 /* ShutAnimator.swift */,
+				0E2A8F091B4041B400DF39BF /* SpreadAnimator.swift */,
+				0E2A8F071B4041AC00DF39BF /* DetailViewController.swift */,
 			);
 			path = TestModalExpand;
 			sourceTree = "<group>";
@@ -220,8 +226,10 @@
 			files = (
 				0EA778171B3FD750004EED62 /* ListViewController.swift in Sources */,
 				0EA777F91B3FD5C4004EED62 /* ViewController.swift in Sources */,
+				0E2A8F081B4041AC00DF39BF /* DetailViewController.swift in Sources */,
 				0EA778191B3FD98E004EED62 /* ShutAnimator.swift in Sources */,
 				0EA777F71B3FD5C4004EED62 /* AppDelegate.swift in Sources */,
+				0E2A8F0A1B4041B400DF39BF /* SpreadAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
