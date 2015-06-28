@@ -23,26 +23,19 @@ class ViewController: UIViewController, UIViewControllerTransitioningDelegate, L
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func tapButton(sender: AnyObject) {
-        if let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Detail") as? ListViewController {
-            controller.transitioningDelegate = self
-            controller.modalPresentationStyle = UIModalPresentationStyle.Custom
-            controller.delegate = self
-
-            let tableView = controller.tableView
-            let index: Int = 4
-            let indexPath = NSIndexPath(forRow: index, inSection: 0)
-            // println("indexPath >>>>>>> \(indexPath)")
-            // println("tableView >>>>>>> \(tableView)")
-
-//            if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) {
-//                let frame = cell.frame
-//                let offset = tableView.contentOffset
-//                let y = (frame.origin.y + frame.size.height) - offset.y + UIApplication.sharedApplication().statusBarFrame.size.height
-//                self.divideY = y
-//            }
-            self.presentViewController(controller, animated: true, completion: nil)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showList" {
+            if let destination = segue.destinationViewController as? UINavigationController {
+                destination.transitioningDelegate = self
+                destination.modalPresentationStyle = .Custom
+                let controller = destination.viewControllers.first as! ListViewController
+                controller.delegate = self
+            }
         }
+    }
+
+    @IBAction func tapButton(sender: AnyObject) {
+        self.performSegueWithIdentifier("showList", sender: self)
     }
 
     func listViewController(controller: ListViewController, didSelectIndex index: Int) {

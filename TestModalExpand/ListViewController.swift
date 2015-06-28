@@ -16,8 +16,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     UIViewControllerTransitioningDelegate {
 
     @IBOutlet weak var tableView: UITableView!
-    var selectedIndex: Int = 0
     var delegate: ListViewControllerDelegate?
+    var dataSource: [String] = [String]()
 
     var divideY: CGFloat = 0
 
@@ -25,6 +25,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.tableView.tableFooterView = UIView()
+        for i in 0..<5 {
+            self.dataSource.append("Detail : \(i)")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,13 +44,17 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Pass the selected object to the new view controller.
         if segue.identifier == "showDetail" {
             let destination = segue.destinationViewController as! DetailViewController
-            destination.modalPresentationStyle = .Custom
             destination.transitioningDelegate = self
+            destination.modalPresentationStyle = .Custom
         }
     }
 
+    @IBAction func tapClose(sender: AnyObject) {
+        self.delegate?.listViewController(self, didSelectIndex: 3)
+    }
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return self.dataSource.count
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -54,13 +62,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        self.selectedIndex = indexPath.row
         let CellIdentifier = "Cell"
         var cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as? UITableViewCell
         if cell == nil {
             cell = UITableViewCell(style: .Default, reuseIdentifier: CellIdentifier)
         }
-        cell?.textLabel?.text = "Detail : \(indexPath.row)"
+        cell?.textLabel?.text = self.dataSource[indexPath.row]
         return cell!
     }
     /*
@@ -76,7 +83,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if let cell = self.tableView.cellForRowAtIndexPath(indexPath) {
             let frame = cell.frame
             let offset = tableView.contentOffset
-            let y = (frame.origin.y + frame.size.height) - offset.y + UIApplication.sharedApplication().statusBarFrame.size.height
+//            let y = (frame.origin.y + frame.size.height) - offset.y + UIApplication.sharedApplication().statusBarFrame.size.height
+            let y = (frame.origin.y + frame.size.height) - offset.y //+ self.topLayoutGuide.length
             self.divideY = y
         }
         self.performSegueWithIdentifier("showDetail", sender: indexPath)
