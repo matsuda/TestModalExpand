@@ -18,7 +18,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var tableView: UITableView!
     var delegate: ListViewControllerDelegate?
     var dataSource: [String] = [String]()
-
     var divideY: CGFloat = 0
 
     override func viewDidLoad() {
@@ -26,9 +25,18 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         // Do any additional setup after loading the view.
         self.tableView.tableFooterView = UIView()
-        for i in 0..<5 {
-            self.dataSource.append("Detail : \(i)")
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        for i in 0..<20 {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(i) * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                self.dataSource.append("Detail : \(i)")
+                let indexPath = NSIndexPath(forRow: i, inSection: 0)!
+                self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+            })
         }
+        // self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,12 +91,32 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if let cell = self.tableView.cellForRowAtIndexPath(indexPath) {
             let frame = cell.frame
             let offset = tableView.contentOffset
-//            let y = (frame.origin.y + frame.size.height) - offset.y + UIApplication.sharedApplication().statusBarFrame.size.height
+            // let y = (frame.origin.y + frame.size.height) - offset.y + UIApplication.sharedApplication().statusBarFrame.size.height
             let y = (frame.origin.y + frame.size.height) - offset.y //+ self.topLayoutGuide.length
             self.divideY = y
         }
         self.performSegueWithIdentifier("showDetail", sender: indexPath)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        var transform: CATransform3D = CATransform3DIdentity
+        /*
+        let frame = cell.frame
+        let y = (frame.origin.y + frame.size.height) - tableView.contentOffset.y
+        let h = UIScreen.mainScreen().bounds.size.height - y
+        let position = CGPoint(x: 0, y: h)
+        */
+        let position = CGPoint(x: 0, y: UIScreen.mainScreen().bounds.size.height)
+        transform = CATransform3DTranslate(transform, position.x, position.y, 0)
+        cell.layer.transform = transform
+        cell.layer.opacity = 0.8
+
+        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.8, options: UIViewAnimationOptions(0), animations: { () -> Void in
+            cell.layer.transform = CATransform3DIdentity
+            cell.layer.opacity = 1
+        }) { (finished: Bool) -> Void in
+        }
     }
 
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

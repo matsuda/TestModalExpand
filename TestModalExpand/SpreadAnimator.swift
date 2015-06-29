@@ -57,7 +57,6 @@ class SpreadAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(topView)
         containerView.addSubview(bottomView)
         containerView.insertSubview(toView, belowSubview: topView)
-        toView.alpha = 0.5
         /*
         UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, options: .CurveEaseOut, animations: { () -> Void in
             topView.frame = topOutFrame
@@ -73,7 +72,6 @@ class SpreadAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .CurveEaseOut, animations: { () -> Void in
             topView.frame = topOutFrame
             bottomView.frame = bottomOutFrame
-            toView.alpha = 1.0
         }) { (finished: Bool) -> Void in
             topView.removeFromSuperview()
             bottomView.removeFromSuperview()
