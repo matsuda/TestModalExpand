@@ -76,6 +76,24 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell = UITableViewCell(style: .Default, reuseIdentifier: CellIdentifier)
         }
         cell?.textLabel?.text = self.dataSource[indexPath.row]
+
+        if let cell = cell {
+            let c = indexPath.row % 3
+            let r = abs(indexPath.row * 10 - 255)
+            switch c {
+            case 0:
+                cell.backgroundColor = UIColor(red: CGFloat(r)/255.0, green: 120/255.0, blue: 80/255.0, alpha: 1)
+            case 1:
+                cell.backgroundColor = UIColor(red: 120/255, green: CGFloat(r)/255, blue: 80/255, alpha: 1)
+            case 2:
+                cell.backgroundColor = UIColor(red: 80/255, green: 120/255, blue: CGFloat(r)/255, alpha: 1)
+            default:
+                break
+            }
+            // 設定すると反応が鈍くなる
+            // cell.selectionStyle = .None
+        }
+
         return cell!
     }
     /*
