@@ -74,6 +74,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         var cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as? UITableViewCell
         if cell == nil {
             cell = UITableViewCell(style: .Default, reuseIdentifier: CellIdentifier)
+            cell?.selectedBackgroundView = UIView()
         }
         cell?.textLabel?.text = self.dataSource[indexPath.row]
 
@@ -90,8 +91,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             default:
                 break
             }
-            // 設定すると反応が鈍くなる
-            // cell.selectionStyle = .None
         }
 
         return cell!
